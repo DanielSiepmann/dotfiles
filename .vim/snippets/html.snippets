@@ -1,0 +1,61 @@
+snippet file Insert full html base document #2
+	<!doctype html>
+	<html class="no-js" lang="">
+		<head>
+			<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<title>${1}</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+		</head>
+		<body>
+			${2}
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		</body>
+	</html>
+snippet file Insert Fluid Template File with Namespace
+	<html xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+		<head></head>
+		<body>
+			${0}
+		</body>
+	</html>
+# TYPO3 Fluid Snippets
+snippet ftrans
+	{f:translate(id: '${1}')}
+snippet fdebug
+	<f:debug>${1:{_all}}</f:debug>${2}
+snippet finput
+	<f:form.${1:textfield} property="${2}" />
+snippet fselect
+	<f:form.select name="${1:name}" options="${2:{variable}}" />${3}
+snippet furiresource
+	{f:uri.resource(path: '${1}')}
+snippet fsubmit
+	<f:form.submit value="${1:value}" />${3}
+snippet fform
+	<f:form action="${1}">
+		${2}
+	</f:form>
+snippet fif
+	<f:if condition="${1}">
+		<f:then>
+			${2}
+		</f:then>
+		<f:else>
+			${3}
+		</f:else>
+	</f:if>
+snippet ffor
+	<f:for each="${1}" as="${2}">
+		${3}
+	</f:for>
+snippet frender
+	<f:render ${1:section}="${0}" arguments="{_all}"/>
+snippet fsection
+	<f:section name="${1}">
+		${2}
+	</f:section>
+snippet script
+	<script type="text/javascript">
+		${0}
+	</script>

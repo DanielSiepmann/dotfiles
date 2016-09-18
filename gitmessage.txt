@@ -1,0 +1,10 @@
+[!!!][BUGFIX] Short summary of changes introduced by this patch
+
+* Bullet points are okay, too
+* An asterisk is used for the bullet, it can be preceded by a single
+  space. This format is rendered correctly by Forge (redmine)
+* Use a hanging indent
+
+Resolves: #12346
+Related: #12340
+Releases: master, 6.2

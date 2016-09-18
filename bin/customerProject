@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# Author: Daniel Siepmann
+# This script will create a new tmux session (or attach existing)
+# for developing customer projects.
+
+# Initialize some variables
+session="project-$1"
+projectRoot="$(pwd)/$1"
+
+# Only create session if not already exists
+tmux has-session -t "$session"
+if [ $? != 0 ]
+then
+    editorPath="$projectRoot/htdocs"
+    if [[ $session == *"patternlab"* ]]; then
+        editorPath="$projectRoot/htdocs/source"
+    fi
+
+    tmux new-session -s "$session" -n editor -d
+    tmux send-keys -t "$session" "cd $editorPath" C-m
+    tmux send-keys -t "$session" 'vim' C-m
+
+    if [[ $session == *"patternlab"* ]]
+    then
+        tmux split-window -v
+        tmux resize-pane -y 5
+        tmux send-keys "cd $projectRoot/htdocs/source/Stylesheets" C-m
+        tmux send-keys "compass watch" C-m
+        tmux split-window -v
+        tmux resize-pane -y 5
+        tmux send-keys "cd $projectRoot/htdocs" C-m
+        tmux send-keys "php core/builder.php -w" C-m
+
+        tmux select-pane -t 0
+    fi
+
+    tmux new-window -n project -t "$session"
+    tmux send-keys -t "$session:1" "cd $projectRoot/htdocs" C-m
+    tmux send-keys "clear" C-m
+
+    # TODO: Wrap with condition if this is a flow project, can be determiend by the flow file
+    tmux new-window -n packages -t "$session"
+    tmux send-keys -t "$session:2" "cd $projectRoot/htdocs/Packages/Application" C-m
+    tmux send-keys "clear" C-m
+    tmux split-window -h
+    tmux send-keys "cd $projectRoot/htdocs/Packages/Application" C-m
+    tmux send-keys "clear" C-m
+
+    tmux new-window -n database -t "$session"
+    tmux send-keys -t "$session:2" "cd $projectRoot/htdocs/Packages/Application" C-m
+    tmux send-keys "clear" C-m
+    tmux send-keys "mycli -u root -D $(basename $projectRoot)" C-m
+
+    # Activate editor
+    tmux select-window -t 1
+fi
+# Attach to existing or created session
+tmux attach -t "$session"

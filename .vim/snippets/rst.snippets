@@ -1,0 +1,43 @@
+snippet post
+	.. post:: `strftime("%b %d, %Y")`
+	   :tags: ${2}
+	   :excerpt: 2
+	
+	${1:Title}
+	=========
+	
+	Further reading
+	---------------
+	
+snippet toc
+	.. toctree::
+
+	   Subfolder/index
+snippet label
+	.. _${0}:
+snippet note
+	.. note::
+	
+	  ${0}
+snippet admo
+	.. ${1:attention, caution, danger, error, hint, important, note, tip, warning, admonition, title}::
+	
+	  ${0}
+snippet todo
+	.. todo:: ${0}
+snippet include
+	.. include:: ../Includes.txt${0}
+snippet sidebar
+	.. sidebar:: ${0}
+snippet figure
+	.. figure:: /Images/${1:1-Installation/figure-1-2.png}
+		:align: center
+
+		${2:Figure 1-2: The autocompletion feature will show you possible class names}
+snippet file
+	.. _${1:refLabel}:
+
+	${2:heading}
+	=====
+	
+	$0

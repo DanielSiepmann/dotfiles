@@ -1,0 +1,14 @@
+*~
+.DS_Store
+typo3temp
+*.swp
+*.swn
+*.swo
+*.orig
+*.pyc
+.sonar
+sonar-project.properties
+tags
+*.~lock.*#
+# As I'm using Makefiles in many projects for my own confidence
+Makefile

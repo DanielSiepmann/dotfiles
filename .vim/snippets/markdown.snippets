@@ -1,0 +1,14 @@
+snippet code
+	{% highlight ${1:ruby} linenos %}
+	${2}
+	{% endhighlight %}
+	${3}
+snippet post
+	---
+	layout: post
+	title: ${1:title}
+	date: `system('date +"%Y-%m-%d"')`
+	tags:
+	- ${2:tags}
+	---
+

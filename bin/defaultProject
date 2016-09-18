@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Author: Daniel Siepmann
+# This script will create a new tmux session (or attach existing)
+# for developing default projects.
+
+# Initialize some variables
+session="def-$1"
+session="${session/\./-}"
+session="${session/\./-}"
+projectRoot="$(pwd)/$1"
+domain="${1/\/old/}"
+
+# Only create session if not already exists
+tmux has-session -t "$session"
+if [ $? != 0 ]
+then
+    editorPath="$projectRoot/"
+
+    # Open editor
+    tmux new-session -s "$session" -n editor -d
+    tmux send-keys -t "$session" "cd $editorPath" C-m
+    tmux send-keys -t "$session" 'vim' C-m
+
+    # Open shell (e.g. for commit)
+    tmux split-window -h
+    tmux send-keys "cd $editorPath" C-m
+    tmux send-keys "git status" C-m
+    # Activate editor
+    tmux select-pane -t 0
+fi
+# Attach to existing or created session
+tmux attach -t "$session"

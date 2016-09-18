@@ -1,0 +1,13 @@
+syntax: glob
+old_uploads
+.DS_Store
+www
+*.orig
+*.rej
+.idea
+*.swp
+*.swo
+.netrwhist
+.vim/sessions/last-session.txt
+.vim/views
+tags

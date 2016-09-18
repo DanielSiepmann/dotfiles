@@ -1,0 +1,8 @@
+#!/bin/bash
+currentBranch=`git branch | grep \* | sed 's/\* //'`
+git checkout master
+git pull
+git checkout stage
+git pull
+git checkout "$currentBranch"
+

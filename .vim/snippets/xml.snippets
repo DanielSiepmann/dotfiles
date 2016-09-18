@@ -1,0 +1,35 @@
+snippet xml
+	<?xml version="1.0"?>
+snippet phpcsxml
+	<?xml version="1.0"?>
+	<ruleset name="Custom Standard">
+		<file>.</file>
+
+	</ruleset>
+snippet xlifft3
+	<?xml version="1.0" encoding="UTF-8"?>
+	<xliff version="1.0">
+		<file source-language="en" datatype="plaintext" original="messages" date="`strftime('%Y-%m-%dT%H:%M:%SZ')`" product-name="`expand('%:h:s?.*ext/??:s?/.*??')`">
+			<header/>
+			<body>
+				<trans-unit id="$0" xml:space="preserve">
+					<source></source>
+				</trans-unit>
+			</body>
+		</file>
+	</xliff>
+snippet xlifffl
+	<?xml version="1.0"?>
+	<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+		<file original="" source-language="${1:de}" datatype="plaintext">
+			<body>
+				<trans-unit id="$0">
+					<source></source>
+				</trans-unit>
+			</body>
+		</file>
+	</xliff>
+snippet trans
+	<trans-unit id="$0">
+		<source></source>
+	</trans-unit>

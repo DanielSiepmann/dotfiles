@@ -1,0 +1,56 @@
+#!/bin/sh
+
+# Author: Daniel Siepmann
+# This script will create a new tmux session (or attach existing)
+# for developing sphinx projects.
+
+# Initialize some variables
+session="sphinx-$1"
+projectRoot="$(pwd)/$1"
+
+# Only create session if not already exists
+tmux has-session -t "$session"
+if [ $? != 0 ]
+then
+    editorPath="$projectRoot/Documentation"
+    if [[ ! -d "$editorPath" ]]; then
+        editorPath="$projectRoot/source"
+    fi
+    if [[ ! -d "$editorPath" ]]; then
+        editorPath="$projectRoot"
+    fi
+    makePath="$projectRoot"
+    if [[ ! -f "$makePath/Makefile" ]]; then
+        makePath="$editorPath/_make"
+    fi
+
+    # Open editor
+    tmux new-session -s "$session" -n editor -d
+    tmux send-keys -t "$session" "cd $editorPath" C-m
+    tmux send-keys -t "$session" 'vim' C-m
+
+    # Open shell (e.g. for commit)
+    tmux new-window -n project -t "$session"
+    tmux send-keys "cd $editorPath" C-m
+    tmux send-keys "git status" C-m
+
+    # Open logging for warnings
+    # TYPO3 Projects
+    if [[ -f "$makePath/_not_versioned/warnings.txt" ]]; then
+        tmux split-window -v
+        tmux resize-pane -y 30
+        tmux send-keys "cd $makePath" C-m
+        tmux send-keys "tail -f _not_versioned/warnings.txt" C-m
+    fi
+
+    # Open compile window with auto watch
+    tmux new-window -n project -t "$session"
+    tmux send-keys "cd $makePath" C-m
+    tmux send-keys "make livehtml" C-m
+    # tmux send-keys "fswatch ../**/*.rst | (while read; do make html && echo 'Generated' ; done)" C-m
+
+    # Activate editor
+    tmux select-window -t 0
+fi
+# Attach to existing or created session
+tmux attach -t "$session"

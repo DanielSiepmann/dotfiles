@@ -1,0 +1,9 @@
+.nvim/
+# As written in https://robots.thoughtbot.com/opt-in-project-specific-vim-spell-checking-and-word-completion
+.vim/spell/*.spl
+# Don't track any further ranger files
+ranger/*
+# Don't care about rake yet
+.rake/
+logs/
+*.log

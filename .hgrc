@@ -1,0 +1,66 @@
+[ui]
+username = Daniel Siepmann <coding@daniel-siepmann.de>
+; Use Sublime Text (if symlinked) to write commit messages.
+; editor = sb --wait
+editor = vim
+; Add global .hgignore file.
+ignore = ~/.hgignore
+merge = vimdiff
+;merge = filemerge
+
+[extensions]
+; Enable color output on CLI for easier reading.
+color =
+; Allow an external program for diffs. Configured below.
+extdiff =
+eol =
+; Enable "hg glog" command with a "graphical" log view.
+graphlog =
+hgk =
+; Show progress bar, e.g. for clone.
+progress =
+purge =
+; Allow using a pager for output. Configure below.
+pager =
+
+children =
+churn =
+
+; hggit =
+
+; Configure external diff programm.
+[extdiff]
+cmd.interdiff = hg-interdiff
+
+[merge-tools]
+filemerge.executable = opendiff
+filemerge.args = $local $other -ancestor $base -merge $output
+
+vimdiff.executable = vim # CLI
+;vimdiff.executable = mvim # GUI - does not work? will use opendiff ...
+; Side diff
+vimdiff.args = -d $base $local $output $other +close +close
+; Display like FileMerge - Not possible to use :diffput?
+;vimdiff.args = -d $output $local $other -c "wincmd J"
+; KDiff3 with result of merge full length at bottom - Not possible to use :diffput?
+;vimdiff.args = -d $base $local $output $other -c "wincmd J"
+
+; Configure pager extension.
+[pager]
+; Define pager to use.
+pager = LESS='FSRX' less
+; Define commands to use the pager for.
+attend = annotate, cat, diff, export, glog, log, qdiff, cgl
+
+[color]
+; status.modified = yellow
+; status.added = green
+; status.removed = red
+; status.deleted = red underline
+; status.unknown = blue underline
+; status.ignored = black white_background
+
+[alias]
+cgl = glog --style compact
+
+%include ~/.hgrc-work

@@ -1,0 +1,48 @@
+[submodule ".vim/bundle/vim-misc"]
+    path = .vim/bundle/vim-misc
+    url = https://github.com/xolox/vim-misc.git
+[submodule ".vim/bundle/tlib_vim"]
+    path = .vim/bundle/tlib_vim
+    url = https://github.com/tomtom/tlib_vim.git
+[submodule ".vim/bundle/vim-addon-mw-utils"]
+    path = .vim/bundle/vim-addon-mw-utils
+    url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule ".vim/bundle/ctrlp.vim"]
+    path = .vim/bundle/ctrlp.vim
+    url = https://github.com/kien/ctrlp.vim.git
+[submodule ".vim/bundle/nerdtree"]
+    path = .vim/bundle/nerdtree
+    url = https://github.com/scrooloose/nerdtree.git
+[submodule ".vim/bundle/vim-snipmate"]
+    path = .vim/bundle/vim-snipmate
+    url = https://github.com/garbas/vim-snipmate.git
+[submodule ".vim/bundle/undotree"]
+    path = .vim/bundle/undotree
+    url = https://github.com/mbbill/undotree.git
+[submodule ".vim/bundle/vdebug"]
+    path = .vim/bundle/vdebug
+    url = https://github.com/joonty/vdebug.git
+[submodule ".vim/bundle/vim-commentary"]
+    path = .vim/bundle/vim-commentary
+    url = https://github.com/tpope/vim-commentary.git
+[submodule ".vim/bundle/tagbar"]
+    path = .vim/bundle/tagbar
+    url = git://github.com/majutsushi/tagbar
+[submodule ".vim/bundle/vim-textobj-comment"]
+    path = .vim/bundle/vim-textobj-comment
+    url = https://github.com/glts/vim-textobj-comment.git
+[submodule ".vim/bundle/php.vim"]
+    path = .vim/bundle/php.vim
+    url = https://github.com/StanAngeloff/php.vim.git
+[submodule ".vim/bundle/vim-indent-object"]
+    path = .vim/bundle/vim-indent-object
+    url = https://github.com/michaeljsmith/vim-indent-object.git
+[submodule ".vim/bundle/php-getter-setter.vim"]
+    path = .vim/bundle/php-getter-setter.vim
+    url = https://github.com/docteurklein/php-getter-setter.vim.git
+[submodule ".vim/bundle/plantuml-syntax"]
+    path = .vim/bundle/plantuml-syntax
+    url = https://github.com/aklt/plantuml-syntax.git
+[submodule ".vim/bundle/ag.vim"]
+    path = .vim/bundle/ag.vim
+    url = https://github.com/rking/ag.vim.git

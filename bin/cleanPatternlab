@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rm -rf public && mkdir public && cp -r core/styleguide public && php core/builder.php -g

@@ -1,0 +1,9 @@
+syntax: glob
+*.swp
+.git*
+*.lock
+*.pyc
+.vim/view
+.vim/.netrwhist
+.vim/sessions
+.vmail/

@@ -1,0 +1,64 @@
+T3_VERSION=7.6.10
+
+ROOT_PATH=/Users/siepmann/Projects/typo3/extensions/solr/
+DB_HOST=127.0.0.1
+DB_NAME=typo3_ext_solr-test
+DB_USER=solr
+DB_PASS=solr
+
+.PHONY: help
+help:
+	@echo "Please use \`make <target>' where <target> is one of"
+	@echo " Testing: "
+	@echo "     test-integration  Run integration tests"
+	@echo " Environment setup: "
+	@echo "     clean       to remove build results"
+	@echo "     install     to install all dependencies local for current user"
+
+.PHONY: clean
+clean:
+	rm -rf .Build/vendor/ \
+	rm -rf .Build/Web
+
+.PHONY: install
+install: clean ctags
+	TYPO3_VERSION="$(T3_VERSION)" \
+	TYPO3_DATABASE_HOST="$(DB_HOST)" \
+	TYPO3_DATABASE_NAME="$(DB_NAME)" \
+	TYPO3_DATABASE_USERNAME="$(DB_USER)" \
+	TYPO3_DATABASE_PASSWORD="$(DB_PASS)" \
+	Build/Test/bootstrap.sh
+
+.PHONY: ctags
+ctags:
+	ctags .
+
+.PHONY: clean-tests
+clean-tests:
+	mysql -u solr -psolr -e 'show databases' \
+	| grep typo3_ext_solr-test* \
+	| xargs -I "@@" mysql -u solr -psolr -e "DROP database \`@@\`"
+
+.PHONY: ci-build
+ci-build:
+	TYPO3_VERSION="$(T3_VERSION)" \
+	TYPO3_DATABASE_HOST="$(DB_HOST)" \
+	TYPO3_DATABASE_NAME="$(DB_NAME)" \
+	TYPO3_DATABASE_USERNAME="$(DB_USER)" \
+	TYPO3_DATABASE_PASSWORD="$(DB_PASS)" \
+		Build/Test/cibuild.sh
+
+.PHONY: test-integration-single
+test-integration-single:
+	typo3DatabaseName="$(DB_NAME)" \
+	typo3DatabaseHost="$(DB_HOST)" \
+	typo3DatabaseUsername="$(DB_USER)" \
+	typo3DatabasePassword="$(DB_PASS)" \
+	TYPO3_PATH_WEB=$(ROOT_PATH).Build/Web \
+	.Build/bin/phpunit \
+		--stop-on-error --colors -c \
+		Build/Test/IntegrationTests.xml \
+		--filter 'ApacheSolrForTypo3\\Solr\\Tests\\Integration\\IndexQueue\\RecordMonitorTest::canUseCorrectIndexingConfigurationForANewCustomPageTypeRecord'
+		# --filter 'ApacheSolrForTypo3\\Solr\\Tests\\Integration\\IndexQueue\\RecordMonitorTest::canQueueUpdatePagesWithCustomPageType'
+		# --filter 'ApacheSolrForTypo3\\Solr\\Tests\\Integration\\IndexQueue\\RecordMonitorTest::canUseCorrectIndexingConfigurationForAnUpdatedCustomPageTypeRecord'
+		# --filter 'ApacheSolrForTypo3\\Solr\\Tests\\Integration\\IndexQueue\\QueueTest::canAddCustomPageTypeToTheQueue'

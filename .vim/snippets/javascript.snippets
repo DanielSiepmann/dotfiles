@@ -1,0 +1,43 @@
+snippet file JavaScript FileTemplate
+	/**
+	 * @param  {object} window    The window object of the browser.
+	 * @param  {object} document  The document object of the browser.
+	 * @param  {function} $       jQuery
+	 * @param  {undefined} undefined Just undefined
+	 *
+	 * @author `system('git config --get user.name')` <`system('git config --get user.email')`>
+	 */
+	;(function(window, document, $, undefined) {
+		${1}
+	})(window, document, jQuery);
+
+snippet log
+	console.log(${1});${0}
+snippet license
+	/*
+	 * ${1}
+	 * Copyright (C) `system('date +%Y')`  `system('git config --get user.name')` <`system('git config --get user.email')`>
+	 *
+	 * This program is free software; you can redistribute it and/or
+	 * modify it under the terms of the GNU General Public License
+	 * as published by the Free Software Foundation; either version 2
+	 * of the License, or (at your option) any later version.
+	 *
+	 * This program is distributed in the hope that it will be useful,
+	 * but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 * GNU General Public License for more details.
+	 *
+	 * You should have received a copy of the GNU General Public License
+	 * along with this program; if not, write to the Free Software
+	 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+	 * 02110-1301, USA.
+	 */
+snippet cdata
+	<![CDATA[
+		${0}
+	]]>
+snippet if
+	if (${1}) {
+		${0}
+	}

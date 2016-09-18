@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Author: Daniel Siepmann
+# This script will create a new tmux session (or attach existing)
+# for all important config files
+
+# Initialize some variables
+session="CONFIGS"
+
+# Only create session if not already exists
+tmux has-session -t "$session"
+if [ $? != 0 ]
+then
+    tmux new-session -s "$session" -n zshrc -d
+    tmux send-keys -t "$session" 'vim ~/.zshrc' C-m
+
+    tmux new-window -n tmux -t "$session"
+    tmux send-keys -t "$session" 'vim ~/.tmux.conf' C-m
+
+    tmux new-window -n vimrc -t "$session"
+    tmux send-keys -t "$session" 'vim ~/.vimrc' C-m
+
+    tmux new-window -n gitconfig -t "$session"
+    tmux send-keys -t "$session" 'vim ~/.gitconfig' C-m
+fi
+# Attach to existing or created session
+tmux attach -t "$session"
+

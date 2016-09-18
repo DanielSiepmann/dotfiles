@@ -1,0 +1,30 @@
+# Makefile for Flow Project
+
+.PHONY: help
+help:
+	@echo "Please use \`make <target>' where <target> is one of"
+	@echo " clean 	Migrate doctrine, clear caches, generate tags file."
+	@echo " update	Update Git and composer."
+	@echo " status	Composer status."
+	@echo " new	Update, clean and show status to start on a new task."
+
+.PHONY: clean
+clean:
+	./flow flow:cache:flush
+	./flow cache:warmup
+	./flow doctrine:migrate
+	ctags .
+
+.PHONY: update
+update:
+	git fap
+	git pull
+	composer update
+# TODO: fap in al packages
+
+.PHONY: status
+status:
+	composer status -vv
+
+.PHONY: new
+new: update clean status

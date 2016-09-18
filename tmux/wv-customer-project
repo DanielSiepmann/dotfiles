@@ -1,0 +1,81 @@
+#!/bin/sh
+
+# Author: Daniel Siepmann
+# This script will create a new tmux session (or attach existing)
+# for developing customer projects.
+
+# Initialize some variables
+session="wv-$1"
+session="${session/\./-}"
+session="${session/\./-}"
+projectRoot="~/Projects/customers/$1"
+domain="${1/\/old/}"
+
+# Only create session if not already exists
+tmux has-session -t "$session"
+if [ $? != 0 ]
+then
+    editorPath="$projectRoot/htdocs"
+    if [[ $session == *"patternlab"* ]]; then
+        editorPath="$projectRoot/htdocs/source"
+    fi
+    if [[ -f "$projectRoot/app/Mage.php" ]]; then
+        editorPath="$projectRoot/htdocs/typo3"
+    fi
+
+    tmux new-session -s "$session" -n editor -d
+    tmux send-keys -t "$session" "cd $editorPath" C-m
+    tmux send-keys -t "$session" 'vim' C-m
+
+    if [[ $session == *"patternlab"* ]]
+    then
+        tmux split-window -v
+        tmux resize-pane -y 5
+        tmux send-keys "cd $projectRoot/htdocs/source/Stylesheets" C-m
+        tmux send-keys "compass watch" C-m
+        tmux split-window -v
+        tmux resize-pane -y 5
+        tmux send-keys "cd $projectRoot/htdocs" C-m
+        tmux send-keys "php core/builder.php -w" C-m
+
+        tmux select-pane -t 0
+    fi
+
+    tmux new-window -n local -t "$session"
+    tmux send-keys -t "$session:1" "cd $projectRoot/htdocs" C-m
+    tmux split-window -h
+    tmux send-keys "cd $projectRoot/htdocs" C-m
+
+    tmux new-window -n stage -t "$session"
+    tmux send-keys -t "$session:2" "cd $projectroot" c-m
+    tmux send-keys -t "$session:2" "ssh stage.$domain" c-m
+    tmux send-keys -t "$session:2" "cd stage" c-m
+    tmux send-keys -t "$session:2" "export PS1='\[\033[0;32m\]\t|\[\033[1;31m\]\h[\u] \W\[\033[0m\]\n$ '" c-m
+    tmux send-keys -t "$session:2" "alias la='ls -1la'" c-m
+    tmux send-keys -t "$session:2" "clear" c-m
+    tmux send-keys -t "$session:2" "echo \"Welcome Daniel ;)\"" c-m
+
+    tmux new-window -n production -t "$session"
+    tmux send-keys -t "$session:3" "cd $projectroot" c-m
+    tmux send-keys -t "$session:3" "ssh $domain" c-m
+    tmux send-keys -t "$session:3" "cd httpdocs" c-m
+    tmux send-keys -t "$session:3" "export PS1='\[\033[0;32m\]\t|\[\033[1;31m\]\h[\u] \W\[\033[0m\]\n$ '" c-m
+    tmux send-keys -t "$session:3" "alias la='ls -1la'" c-m
+    tmux send-keys -t "$session:3" "clear" c-m
+    tmux send-keys -t "$session:3" "echo \"Welcome Daniel ;)\"" c-m
+
+    tmux new-window -n log -t "$session"
+    tmux send-keys -t "$session:4" "cd $projectRoot/logs" C-m
+    tmux send-keys -t "$session:4" 'tail -f apache_error_log' C-m
+
+    # Solr if folder exists
+    if [ -d "$projectRoot/solr" ]; then
+        tmux new-window -n solr -t "$session"
+        tmux send-keys -t "$session:5" "cd $projectRoot/solr" C-m
+        tmux send-keys -t "$session:5" 'cd /usr/local/Cellar/solr/5.0.0/libexec/example; sudo java -Dsolr.solr.home=$1 -jar start.jar' C-m
+    fi
+
+    tmux select-window -t 1
+fi
+# Attach to existing or created session
+tmux attach -t "$session"
