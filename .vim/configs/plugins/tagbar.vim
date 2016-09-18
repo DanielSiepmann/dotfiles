@@ -1,6 +1,7 @@
 " Remove quick help etc.
 let g:tagbar_compact = 1
 let g:tagbar_iconchars = ['+', '-']
+let g:tagbar_autopreview = 1
 
 let g:tagbar_type_php  = {
     \ 'ctagstype' : 'php',
@@ -12,8 +13,6 @@ let g:tagbar_type_php  = {
         \ 't:traits:1',
         \ 'c:classes:1',
         \ 'd:constantDefinitions:1',
-        \ 'v:variables:1',
-        \ 'l:localVariables:1',
         \ 'f:functions:0',
     \ ]
 \ }

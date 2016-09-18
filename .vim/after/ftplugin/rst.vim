@@ -20,5 +20,5 @@ let g:tagbar_type_rst = {
     \ 'sort': 0,
     \ }
 
-execute ':Vst foldr'
+" execute ':Vst foldr'
 " setlocal foldlevel=0

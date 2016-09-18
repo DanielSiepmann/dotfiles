@@ -10,11 +10,12 @@ map <leader>nb :set number!<cr>
 " Configure navigation, e.g. go to buffer, file, ...
 nnoremap <leader>p :CtrlP<cr>
 nnoremap <leader>l :CtrlPBuffer<cr>
-nnoremap <leader>t :CtrlPBufTag<cr>
+nnoremap <leader>t :CtrlPTag<cr>
+nnoremap <leader>r :CtrlPBufTag<cr>
 " Find current file in NERDTree.
 nnoremap <leader>f :NERDTreeFind<cr>
 " Toggle tag bar showing tags in current buffer
-nnoremap <leader>b :TagbarToggle<cr>
+nnoremap <leader>b :TagbarOpenAutoClose<cr>
 nnoremap <leader>k :NERDTreeToggle<cr>
 " Stop highlighting of search results.
 nnoremap <leader>nh :nohlsearch<cr>
